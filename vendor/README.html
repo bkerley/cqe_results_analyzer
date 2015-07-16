@@ -1,0 +1,52 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+</head>
+<body>
+<h1 id="scoring-readme">Scoring README</h1>
+<p>This document describes the layout of the CQE_Scores.csv file. Each record (line) in CQE_Scores.csv consists of the following 14 columns: TeamName, cset, package_name, CB_Score, AvailabilityScore, FuncScore, PerfScore, ExecTimeOverhead, FileSizeOverhead, MemUseOverhead, SecurityScore, ReferenceScore, ConsensusScore, EvaluationScore. Details on the scoring algorithm can be found at: <a href="https://github.com/CyberGrandCallenge/cgc-release-documentation/blob/master/CQE%20Scoring.pdf">https://github.com/CyberGrandCallenge/cgc-release-documentation/blob/master/CQE Scoring.pdf</a>. Also note where applicable the column names are followed by the attribute name from the scoring documentation, linked above. These columns are broken down as follows:</p>
+<p>Columns 1-3:</p>
+<ol style="list-style-type: decimal">
+<li>TeamName - the competitor ID. Submissions from finalists are identified as, e.g. 'First Place - FINALIST'; all other teams are collectively listed as 'anon'.</li>
+<li>cset - the common name of the challenge set, which contains the author ID and a sequence number.</li>
+<li>package_name - name of the submission file uploaded to S3 (in the ${csid}_${ar_hash}.ar format, where ${csid} is the anonymous cset identifier, and ${ar_hash} is SHA-256 hash of the submission archive).</li>
+</ol>
+<p>Column 4:</p>
+<ol start="4" style="list-style-type: decimal">
+<li>CB Score - the final score out of a maximum of 4 awarded to the competitor for the specific submission. CB Score is comprised of Availability Score (5) x Security Score (11) X Evaluation Score (14). Details of the scoring algorithm can be found on github, see link above.</li>
+</ol>
+<p>Column 5:</p>
+<ol start="5" style="list-style-type: decimal">
+<li>Availability Score - the total availability score that is used to calculate the total score from (4) above. Total Availability Score is the minimum of PerfScore (7) and FuncScore (6).</li>
+</ol>
+<p>Column 6:</p>
+<ol start="6" style="list-style-type: decimal">
+<li>FuncScore - the fraction of test cases passed by the Replacement CB over the total, amortized by the step function as described in the scoring document listed above, and used for the availability calculation in (5) above.</li>
+</ol>
+<p>Columns 7-10:</p>
+<ol start="7" style="list-style-type: decimal">
+<li>PerfScore- the total performance score, which is the worst negative impact of ExecTimeOverhead (8), FileSizeOverhead (9), and MemUseOverhead (10). </li>
+<li>ExecTimeOverhead - the fraction of execution time overhead of the Replacement CB as compared to the Reference Patched CB. ExecTimeOverhead &lt; 10% receives full score. Details can be found in the scoring document listed above.</li>
+<li>FileSizeOverhead - the fraction of file size overhead of the Replacement CB as compared to the Reference Patched CB. FileSizeOverhead &lt; 40% receives full score.</li>
+<li>MemUseOverhead - the fraction of memory useage overhead of the Replacement CB as compared to the Reference Patched CB. MemUseOverhead &lt; 10% receives full score.</li>
+</ol>
+<ul>
+<li>Note that the worst negative impact of (8), (9), or (10), is the factor that will be used to calculate perf via its step function as described in the scoring document listed above.</li>
+</ul>
+<p>Columns 11-13:</p>
+<ol start="11" style="list-style-type: decimal">
+<li>Security Score - the total security score. Security Score goes to 0 if ReferenceScore = 0, otherwise it is 1 + 0.5 x (ReferenceScore (12) + ConsensusScore (13))</li>
+<li>ReferenceScore - the security reference, the fraction of reference PoVs that prove vulnerability in the Replacement CB as compared to the Reference Patched CB.</li>
+<li>ConsensusScore - a binary value (0,1). 0 if <strong>Any</strong> submitted PoV proves vulnerability in the Replacement CB, and 1 if <strong>No</strong> submitted PoV proves vulnerability.</li>
+</ol>
+<p>Column 14:</p>
+<ol start="14" style="list-style-type: decimal">
+    <li>Evaluation Score - a binary value (1,2). 1 if the submitted PoV <strong>does not</strong> prove vulnerability in the reference CB, and 2 if the submitted PoV <strong>does</strong> prove vulnerability in the reference CB.</li>
+</ol>
+</body>
+</html>
