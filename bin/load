@@ -4,3 +4,7 @@ createdb cqe_results
 psql -f `dirname $0`/../src/init.sql cqe_results
 cat `dirname $0`/../src/load.sql | psql cqe_results
 psql -f `dirname $0`/../src/post_load.sql cqe_results
+
+for f in `dirname $0`/../src/views/*.sql; do
+    psql -f $f cqe_results
+done
