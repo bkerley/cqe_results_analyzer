@@ -1,4 +1,4 @@
-CREATE VIEW unsolved_csets
+CREATE OR REPLACE VIEW unsolved_csets
        AS SELECT q.cset FROM
           (SELECT
                cset,

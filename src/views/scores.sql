@@ -1,4 +1,4 @@
-CREATE VIEW scores
+CREATE OR REPLACE VIEW scores
        AS SELECT
                TeamName,
                SUM(CB_Score) AS total_score
