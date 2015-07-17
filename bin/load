@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+createdb cqe_results
+psql -f `dirname $0`/../src/init.sql cqe_results
+cat `dirname $0`/../src/load.sql | psql cqe_results
