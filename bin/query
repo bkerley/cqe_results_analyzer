@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+
+psql $* cqe_results
