@@ -1,7 +1,11 @@
 # CQE Results Analyzer
 
 This is a set of SQL and shell scripts to load and analyze the DARPA Cyber
-Grand Challenge Qualifying Event (CGC CQE) results using PostgreSQL.
+Grand Challenge Qualifying Event (CGC CQE) results using PostgreSQL. It loads
+the "detailed scores" data (from [the CGC repository website][cqe_results])
+into Postgres tables that are easy to query.
+
+[cqe_results]: http://repo.cybergrandchallenge.com/cqe_results/
 
 1. Clone this project locally.
 2. Have PostgreSQL up and running in such a fashion that `psql` and `createdb`
